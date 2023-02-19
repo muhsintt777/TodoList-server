@@ -6,7 +6,7 @@ const router = Router();
 let todos = [{ id: "abcdef", text: "bike wash" }];
 
 router.get("/", (req, res) => {
-  res.json(todos);
+  res.json({ todos });
 });
 
 router.post("/", (req, res) => {
@@ -23,7 +23,7 @@ router.put("/", (req, res) => {
   const text = req.body.text;
   const data = todos.find((todo) => todo.id === id);
   data.text = text;
-  res.json(todos);
+  res.json({ id, text });
 });
 
 router.delete("/:id", (req, res) => {
