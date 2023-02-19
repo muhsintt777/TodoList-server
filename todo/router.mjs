@@ -12,8 +12,10 @@ router.get("/", (req, res) => {
 router.post("/", (req, res) => {
   const text = req.body.text;
   const id = v4();
-  todos.push({ id: id, text: text });
-  res.json(todos);
+  const item = { id, text };
+  todos.push(item);
+  console.log(todos);
+  res.json(item);
 });
 
 router.put("/", (req, res) => {
@@ -24,11 +26,11 @@ router.put("/", (req, res) => {
   res.json(todos);
 });
 
-router.delete("/", (req, res) => {
-  const id = req.body.id;
+router.delete("/:id", (req, res) => {
+  const id = req.params.id;
   const newArr = todos.filter((todo) => todo.id !== id);
   todos = newArr;
-  res.json(todos);
+  res.json({ id });
 });
 
 export { router as todoRouter };
