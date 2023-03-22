@@ -3,7 +3,7 @@ import { v4 } from "uuid";
 
 const router = Router();
 
-let todos = [{ id: "abcdef", text: "bike wash" }];
+let todos = [{ id: "abcdef", text: "bike wash", isDone: false }];
 
 router.get("/", (req, res) => {
   res.json({ todos });
@@ -12,18 +12,24 @@ router.get("/", (req, res) => {
 router.post("/", (req, res) => {
   const text = req.body.text;
   const id = v4();
-  const item = { id, text };
+  const item = { id, text, isDone: false };
+  text;
   todos.push(item);
-  console.log(todos);
   res.json(item);
 });
 
 router.put("/", (req, res) => {
   const id = req.body.id;
   const text = req.body.text;
+  const isDone = req.body.isDone;
+
   const data = todos.find((todo) => todo.id === id);
   data.text = text;
-  res.json({ id, text });
+  data.isDone = isDone;
+
+  const newTodos = todos.filter((todo) => todo.id !== id);
+  todos = [...newTodos, data];
+  res.json(data);
 });
 
 router.delete("/:id", (req, res) => {
