@@ -1,9 +1,11 @@
 import Express, { json } from "express";
 import cors from "cors";
 import { todoRouter } from "./todo/router.mjs";
+import mongoose from "mongoose";
+import { connectDb } from "./config/dbConn.js";
 const PORT = process.env.PORT || 3500;
 const app = Express();
-// connectDb();
+connectDb();
 
 app.use(json());
 app.use(
