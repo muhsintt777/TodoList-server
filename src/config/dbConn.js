@@ -4,7 +4,7 @@ mongoose.set("strictQuery", false);
 
 export const connectDb = async () => {
   try {
-    await mongoose.connect("mongodb://localhost:27017/TodoList");
+    await mongoose.connect(process.env.MONGODB_URI);
   } catch (err) {
     console.log(err);
   }
