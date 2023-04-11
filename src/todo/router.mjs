@@ -1,11 +1,13 @@
 import { Router } from "express";
 import { v4 } from "uuid";
+import { getAllTodo } from "./controller.mjs";
 
 const router = Router();
 
 let todos = [{ id: "abcdef", text: "bike wash", isDone: false }];
 
 router.get("/", (req, res) => {
+  getAllTodo(req, res);
   res.json({ todos });
 });
 

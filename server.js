@@ -1,10 +1,10 @@
+import mongoose from "mongoose";
+import cors from "cors";
 import dotenv from "dotenv";
 dotenv.config();
 import Express, { json } from "express";
 const app = Express();
-import cors from "cors";
 import { todoRouter } from "./src/todo/router.mjs";
-import mongoose from "mongoose";
 import { connectDb } from "./src/config/dbConn.js";
 const PORT = process.env.PORT || 3500;
 connectDb();
