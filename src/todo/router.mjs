@@ -1,44 +1,16 @@
 import { Router } from "express";
-import { v4 } from "uuid";
-import { getAllTodo } from "./controller.mjs";
+import { deleteTodo, getTodos, postTodo, putTodo } from "./controller.mjs";
 
 const router = Router();
 
 let todos = [{ id: "abcdef", text: "bike wash", isDone: false }];
 
-router.get("/", (req, res) => {
-  getAllTodo(req, res);
-  res.json({ todos });
-});
+router.get("/", getTodos);
 
-router.post("/", (req, res) => {
-  const text = req.body.text;
-  const id = v4();
-  const item = { id, text, isDone: false };
-  text;
-  todos.push(item);
-  res.json(item);
-});
+router.post("/", postTodo);
 
-router.put("/", (req, res) => {
-  const id = req.body.id;
-  const text = req.body.text;
-  const isDone = req.body.isDone;
+router.put("/:id", putTodo);
 
-  const data = todos.find((todo) => todo.id === id);
-  data.text = text;
-  data.isDone = isDone;
-
-  const newTodos = todos.filter((todo) => todo.id !== id);
-  todos = [...newTodos, data];
-  res.json(data);
-});
-
-router.delete("/:id", (req, res) => {
-  const id = req.params.id;
-  const newArr = todos.filter((todo) => todo.id !== id);
-  todos = newArr;
-  res.json({ id });
-});
+router.delete("/:id", deleteTodo);
 
 export { router as todoRouter };
