@@ -3,8 +3,6 @@ import { deleteTodo, getTodos, postTodo, putTodo } from "./controller.mjs";
 
 const router = Router();
 
-let todos = [{ id: "abcdef", text: "bike wash", isDone: false }];
-
 router.get("/", getTodos);
 
 router.post("/", postTodo);
