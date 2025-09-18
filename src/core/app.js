@@ -13,3 +13,5 @@ app.use(
 );
 
 app.use("/todo", todoRouter);
+
+export { app };
