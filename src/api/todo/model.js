@@ -1,10 +1,8 @@
-import mongoose from "mongoose";
-
-const { Schema } = mongoose;
+import { model, Schema } from "mongoose";
 
 const todoSchema = new Schema({
   text: String,
   isDone: Boolean,
 });
 
-export default mongoose.model("Todo", todoSchema);
+export const TodoModel = model("Todo", todoSchema);
