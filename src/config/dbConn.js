@@ -1,10 +1,13 @@
 import mongoose from "mongoose";
+import { ENV } from "./env.js";
 
 mongoose.set("strictQuery", false);
 
 export const connectDb = () => {
   try {
-    mongoose.connect(process.env.MONGODB_URI, {
+    console.log(ENV);
+    
+    mongoose.connect(ENV.MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
