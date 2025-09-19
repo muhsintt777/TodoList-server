@@ -1,23 +1,33 @@
 import { TodoService } from "./service.js";
 
-export const getTodos = async (req, res) => {
-  const todos = await TodoService.getAllTodo();
-  res.json(todos);
-};
+export class TodoController {
+  static async getAllTodos(req, res) {
+    const todos = await TodoService.getAllTodo();
+    if (!todos.length) {
+      res.status(204).json();
+      return;
+    }
+    res.status(200).json(todos);
+    return;
+  }
 
-export const postTodo = async (req, res) => {
-  const response = await TodoService.addTodo(req.body);
-  res.status(201);
-  res.json(response);
-};
+  static async createTodo(req, res) {
+    const todoId = await TodoService.addTodo(req.body?.text);
+    res.status(201);
+    res.json({ id: todoId });
+    return;
+  }
 
-export const putTodo = async (req, res) => {
-  const response = await TodoService.updateTodo(req.params.id, req.body);
-  res.json(response);
-};
+  static async updateTodo(req, res) {
+    await TodoService.updateTodo(req.params.id, req.body);
+    res.status(200).json();
+    return;
+  }
 
-export const deleteTodo = async (req, res) => {
-  const id = req.params.id;
-  const response = await TodoService.deleteTodoService(id);
-  res.json(response);
-};
+  static async deleteTodo(req, res) {
+    const id = req.params.id;
+    await TodoService.deleteTodo(id);
+    res.status(200).json();
+    return;
+  }
+}
