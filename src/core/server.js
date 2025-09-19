@@ -15,10 +15,7 @@ const startServer = async () => {
       }
     });
 
-    await mongoose.connect(ENV.MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(ENV.MONGODB_URI);
     console.log("--- MongoDB connected ---");
 
     app.listen(ENV.PORT, () => {
