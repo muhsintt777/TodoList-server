@@ -24,9 +24,12 @@ export class TodoService {
 
   static async updateTodo(id, todoDetails) {
     if (!isValidObjectId(id)) throw new Error("Invalid ID");
+    if (todoDetails.text === undefined && todoDetails.isDone === undefined) {
+      throw new Error("Nothing to update");
+    }
     if (
-      typeof todoDetails?.text !== "string" ||
-      typeof todoDetails?.isDone !== "boolean"
+      (todoDetails.text && typeof todoDetails?.text !== "string") ||
+      (todoDetails.isDone && typeof todoDetails?.isDone !== "boolean")
     ) {
       throw new Error("Invalid details");
     }
