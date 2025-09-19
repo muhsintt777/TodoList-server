@@ -1,7 +1,7 @@
 import cors from "cors";
 import Express from "express";
 
-import { todoRouter } from "../api/todo/router.mjs";
+import { todoRouter } from "../api/todo/router.js";
 
 const app = Express();
 
