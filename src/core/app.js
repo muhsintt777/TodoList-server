@@ -15,8 +15,8 @@ app.use(
 app.use("/todo", todoRouter);
 
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ error: "Something went wrong!" });
+  console.log("err: \n", err.name, "\t", err.message);
+  res.status(500).json({ error: err.message || "Something went wrong!" });
 });
 
 export { app };
