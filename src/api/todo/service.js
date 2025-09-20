@@ -1,5 +1,6 @@
 import { isValidObjectId } from "mongoose";
 import { TodoModel } from "./model.js";
+import { CustomError, ERROR_TYPE } from "../../utils/customError.js";
 
 export class TodoService {
   static async getAllTodo() {
@@ -10,7 +11,7 @@ export class TodoService {
 
   static async addTodo(text) {
     if (typeof text !== "string") {
-      throw new Error("Invalid text");
+      throw new CustomError(ERROR_TYPE.VALIDATION_ERROR, "Text is required");
     }
 
     const todo = await TodoModel.create({ text });
@@ -18,20 +19,28 @@ export class TodoService {
   }
 
   static async deleteTodo(id) {
-    if (!isValidObjectId(id)) throw new Error("Invalid ID");
+    if (!isValidObjectId(id)) {
+      throw new CustomError(ERROR_TYPE.VALIDATION_ERROR, "Invalid id");
+    }
+
     await TodoModel.deleteOne({ _id: id });
   }
 
   static async updateTodo(id, todoDetails) {
-    if (!isValidObjectId(id)) throw new Error("Invalid ID");
+    if (!isValidObjectId(id)) {
+      throw new CustomError(ERROR_TYPE.VALIDATION_ERROR, "Invalid id");
+    }
     if (todoDetails.text === undefined && todoDetails.isDone === undefined) {
-      throw new Error("Nothing to update");
+      throw new CustomError(ERROR_TYPE.VALIDATION_ERROR, "Nothing to update");
     }
     if (
       (todoDetails.text && typeof todoDetails?.text !== "string") ||
       (todoDetails.isDone && typeof todoDetails?.isDone !== "boolean")
     ) {
-      throw new Error("Invalid details");
+      throw new CustomError(
+        ERROR_TYPE.VALIDATION_ERROR,
+        "Invalid update details"
+      );
     }
 
     await TodoModel.updateOne({ _id: id }, todoDetails);
