@@ -4,7 +4,10 @@ import { CustomError, ERROR_TYPE } from "../../utils/customError.js";
 
 export class TodoService {
   static async getAllTodo() {
-    const todos = await TodoModel.find().limit(20).lean();
+    const todos = await TodoModel.find()
+      .limit(20)
+      .sort({ createdAt: -1 })
+      .lean();
     if (!todos.length) return [];
     return todos;
   }
