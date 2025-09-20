@@ -3,6 +3,6 @@ export class ApiResponse {
     this.message = message;
     this.data = data;
     this.errorType = errorType;
-    this.success = !Boolean(errorType);
+    this.isSuccess = !Boolean(errorType);
   }
 }
