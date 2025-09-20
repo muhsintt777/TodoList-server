@@ -1,3 +1,4 @@
+import { ApiResponse } from "../../utils/apiResponse.js";
 import { TodoService } from "./service.js";
 
 export class TodoController {
@@ -7,27 +8,29 @@ export class TodoController {
       res.status(204).json();
       return;
     }
-    res.status(200).json(todos);
+    res.status(200).json(new ApiResponse({ data: todos }));
     return;
   }
 
   static async createTodo(req, res) {
     const todoId = await TodoService.addTodo(req.body?.text);
     res.status(201);
-    res.json({ id: todoId });
+    res.json(
+      new ApiResponse({ data: { id: todoId }, message: "Created successfully" })
+    );
     return;
   }
 
   static async updateTodo(req, res) {
     await TodoService.updateTodo(req.params.id, req.body);
-    res.status(200).json();
+    res.status(200).json(new ApiResponse({ message: "Updated successfully" }));
     return;
   }
 
   static async deleteTodo(req, res) {
     const id = req.params.id;
     await TodoService.deleteTodo(id);
-    res.status(200).json();
+    res.status(200).json(new ApiResponse({ message: "Deleted successfully" }));
     return;
   }
 }
